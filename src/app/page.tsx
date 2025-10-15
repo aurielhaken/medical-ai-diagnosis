@@ -92,7 +92,7 @@ export default function MyDocAI() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
       {/* Effets de fond animés */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -101,30 +101,30 @@ export default function MyDocAI() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      {/* Header Premium */}
+      {/* Header Ultra Premium */}
       <header className="relative z-10 flex justify-between items-center p-8">
         <div className="flex items-center space-x-4">
           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-2xl">
             <Stethoscope className="w-7 h-7 text-white" strokeWidth={2} />
           </div>
           <div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               MyDoc-AI
             </h2>
-            <p className="text-sm text-blue-300">Intelligence Médicale</p>
+            <p className="text-sm text-gray-600 font-medium">Intelligence Médicale</p>
           </div>
         </div>
         
         <div className="flex items-center space-x-4">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3">
+          <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl px-6 py-3 shadow-lg">
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as 'fr' | 'en' | 'es')}
-              className="bg-transparent text-white font-medium focus:outline-none cursor-pointer"
+              className="bg-transparent text-gray-700 font-medium focus:outline-none cursor-pointer"
             >
-              <option value="fr" className="bg-slate-800 text-white">🇫🇷 Français</option>
-              <option value="en" className="bg-slate-800 text-white">🇺🇸 English</option>
-              <option value="es" className="bg-slate-800 text-white">🇪🇸 Español</option>
+              <option value="fr" className="bg-white text-gray-700">🇫🇷 Français</option>
+              <option value="en" className="bg-white text-gray-700">🇺🇸 English</option>
+              <option value="es" className="bg-white text-gray-700">🇪🇸 Español</option>
             </select>
           </div>
         </div>
@@ -173,12 +173,12 @@ export default function MyDocAI() {
           </div>
           
           {/* Titre principal ultra */}
-          <h1 className="text-8xl md:text-9xl font-black bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent mb-6 tracking-tight drop-shadow-2xl">
+          <h1 className="text-8xl md:text-9xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 bg-clip-text text-transparent mb-6 tracking-tight drop-shadow-2xl">
             MyDoc-AI
           </h1>
           
           {/* Sous-titre ultra */}
-          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-white/90 drop-shadow-lg">
+          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-gray-800 drop-shadow-lg">
             {t.subtitle}
           </p>
         </div>
@@ -189,10 +189,10 @@ export default function MyDocAI() {
             {/* Effet de lueur autour de la barre de recherche */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-cyan-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
-            <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-2 shadow-2xl">
+            <div className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-2 shadow-2xl">
               <div className="flex items-center">
                 <div className="absolute left-6 flex items-center pointer-events-none z-10">
-                  <Search className="h-7 w-7 text-blue-300" />
+                  <Search className="h-7 w-7 text-blue-500" />
                 </div>
                 <input
                   type="text"
@@ -200,7 +200,7 @@ export default function MyDocAI() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={handleKeyPress}
                   placeholder={t.searchPlaceholder}
-                  className="flex-1 pl-16 pr-6 py-8 bg-transparent text-white text-2xl placeholder-white/60 focus:outline-none font-medium"
+                  className="flex-1 pl-16 pr-6 py-8 bg-transparent text-gray-800 text-2xl placeholder-gray-500 focus:outline-none font-medium"
                 />
                 <button
                   type="button"
@@ -223,32 +223,32 @@ export default function MyDocAI() {
         </div>
 
         {/* Example Ultra Premium */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-8 py-4 mb-16">
-          <p className="text-lg md:text-xl font-medium text-white/80 text-center">
+        <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl px-8 py-4 mb-16 shadow-lg">
+          <p className="text-lg md:text-xl font-medium text-gray-700 text-center">
             {t.example}
           </p>
         </div>
 
         {/* Diagnostic Results Ultra Premium */}
         {diagnosis && (
-          <div className="w-full max-w-5xl bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-10 md:p-12 mt-16 animate-fade-in-up">
+          <div className="w-full max-w-5xl bg-white/95 backdrop-blur-2xl border border-gray-200 rounded-3xl shadow-2xl p-10 md:p-12 mt-16 animate-fade-in-up">
             {/* En-tête du diagnostic ultra */}
-            <div className="mb-10 pb-8 border-b border-white/20">
+            <div className="mb-10 pb-8 border-b border-gray-300">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
-                  <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-white drop-shadow-lg">
+                  <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-gray-800 drop-shadow-lg">
                     {diagnosis.condition}
                   </h2>
                   <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center space-x-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/30">
-                      <span className="text-2xl font-black text-white">{diagnosis.probability}%</span>
-                      <span className="text-lg font-bold text-white/90">Probabilité</span>
+                    <div className="flex items-center space-x-3 bg-blue-100 px-6 py-3 rounded-full border border-blue-200">
+                      <span className="text-2xl font-black text-blue-800">{diagnosis.probability}%</span>
+                      <span className="text-lg font-bold text-blue-700">Probabilité</span>
                     </div>
-                    <span className={`px-6 py-3 rounded-full text-lg font-black border-2 backdrop-blur-md ${
-                      diagnosis.urgency === 'critical' ? 'bg-red-500/30 border-red-400 text-red-100' :
-                      diagnosis.urgency === 'high' ? 'bg-orange-500/30 border-orange-400 text-orange-100' :
-                      diagnosis.urgency === 'medium' ? 'bg-yellow-500/30 border-yellow-400 text-yellow-100' :
-                      'bg-green-500/30 border-green-400 text-green-100'
+                    <span className={`px-6 py-3 rounded-full text-lg font-black border-2 ${
+                      diagnosis.urgency === 'critical' ? 'bg-red-100 border-red-400 text-red-800' :
+                      diagnosis.urgency === 'high' ? 'bg-orange-100 border-orange-400 text-orange-800' :
+                      diagnosis.urgency === 'medium' ? 'bg-yellow-100 border-yellow-400 text-yellow-800' :
+                      'bg-green-100 border-green-400 text-green-800'
                     }`}>
                       {diagnosis.urgency === 'critical' ? '🚨 Urgent' :
                        diagnosis.urgency === 'high' ? '⚠️ Élevé' :
@@ -261,12 +261,12 @@ export default function MyDocAI() {
 
             {/* Description ultra */}
             <div className="mb-10">
-              <h3 className="text-2xl font-black mb-4 text-white flex items-center">
+              <h3 className="text-2xl font-black mb-4 text-gray-800 flex items-center">
                 <span className="mr-3">📋</span>
                 Description
               </h3>
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
-                <p className="text-xl leading-relaxed font-medium text-white/90">
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                <p className="text-xl leading-relaxed font-medium text-gray-700">
                   {diagnosis.description}
                 </p>
               </div>
@@ -275,15 +275,15 @@ export default function MyDocAI() {
             {/* Recommandations ultra */}
             {diagnosis.recommendations && diagnosis.recommendations.length > 0 && (
               <div className="mb-10">
-                <h3 className="text-2xl font-black mb-6 text-white flex items-center">
+                <h3 className="text-2xl font-black mb-6 text-gray-800 flex items-center">
                   <span className="mr-3">💊</span>
                   Recommandations
                 </h3>
                 <ul className="space-y-4">
                   {diagnosis.recommendations.map((rec: string, index: number) => (
-                    <li key={index} className="flex items-start bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 hover:bg-white/15 transition-all duration-300">
-                      <CheckCircle className="w-7 h-7 mr-4 mt-1 flex-shrink-0 text-green-400" />
-                      <span className="text-lg font-medium text-white/90">{rec}</span>
+                    <li key={index} className="flex items-start bg-green-50 p-6 rounded-2xl border border-green-200 hover:bg-green-100 transition-all duration-300">
+                      <CheckCircle className="w-7 h-7 mr-4 mt-1 flex-shrink-0 text-green-600" />
+                      <span className="text-lg font-medium text-gray-700">{rec}</span>
                     </li>
                   ))}
                 </ul>
@@ -291,10 +291,10 @@ export default function MyDocAI() {
             )}
 
             {/* Avertissement ultra */}
-            <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-md border border-yellow-400/30 rounded-2xl p-8">
+            <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-300 rounded-2xl p-8">
               <div className="flex items-start">
-                <AlertTriangle className="w-8 h-8 mr-4 mt-1 flex-shrink-0 text-yellow-300" />
-                <p className="text-lg font-medium leading-relaxed text-white/90">{t.disclaimer}</p>
+                <AlertTriangle className="w-8 h-8 mr-4 mt-1 flex-shrink-0 text-yellow-600" />
+                <p className="text-lg font-medium leading-relaxed text-gray-700">{t.disclaimer}</p>
               </div>
             </div>
           </div>
@@ -304,11 +304,11 @@ export default function MyDocAI() {
 
       {/* Footer Ultra Premium */}
       <footer className="relative z-10 mt-auto py-12 text-center">
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-8 py-6 max-w-2xl mx-auto">
-          <p className="text-xl font-bold text-white/90">
+        <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl px-8 py-6 max-w-2xl mx-auto shadow-lg">
+          <p className="text-xl font-bold text-gray-800">
             {t.poweredBy}
           </p>
-          <div className="mt-4 flex justify-center space-x-6 text-sm text-white/60">
+          <div className="mt-4 flex justify-center space-x-6 text-sm text-gray-600">
             <span>🔒 Sécurisé</span>
             <span>⚡ Rapide</span>
             <span>🎯 Précis</span>
