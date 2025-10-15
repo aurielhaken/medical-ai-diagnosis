@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeSymptoms, getPersonalizedRecommendations, calculateUrgency } from '@/lib/medical-database';
 import { callGeminiMedical, callOpenAIMedical, callOpenRouterMedical } from '@/lib/medical-ai-services';
-import { getTreatmentForCondition, searchTreatmentsBySymptom } from '@/lib/medical-treatments';
+import { getTreatmentForCondition, searchTr
+  eatmentsBySymptom } from '@/lib/medical-treatments';
 import { getUniversalTreatmentsForSymptom, generateIntegrativePlan } from '@/lib/universal-medicine';
 
 // Cache simple en mémoire
-const diagnosisCache = new Map<string, { data: any; timestamp: number }>();
+const diagnosisCache = new Map<string, { data: unknown; timestamp: number }>();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { symptoms, doctorId, patientInfo } = body;
+        const { symptoms, doctorId } = body;
 
     if (!symptoms || !Array.isArray(symptoms) || symptoms.length === 0) {
       return NextResponse.json(
@@ -199,11 +200,11 @@ export async function POST(request: NextRequest) {
       integrativePlan: integrativePlan || null
     };
 
-    // Mettre en cache le résultat
-    diagnosisCache.set(cacheKey, {
-      data: finalDiagnosis,
-      timestamp: Date.now()
-    });
+        // Mettre en cache le résultat
+        diagnosisCache.set(cacheKey, {
+          data: finalDiagnosis as unknown,
+          timestamp: Date.now()
+        });
 
     // Limiter la taille du cache (garder max 100 entrées)
     if (diagnosisCache.size > 100) {

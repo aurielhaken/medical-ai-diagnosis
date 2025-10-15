@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Stethoscope, AlertTriangle, CheckCircle, Clock, Languages } from 'lucide-react';
+import { Search, Stethoscope, AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface Diagnosis {
   condition: string;
