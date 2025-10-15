@@ -173,58 +173,61 @@ export default function MyDocAI() {
           </div>
           
           {/* Titre principal ultra */}
-          <h1 className="text-8xl md:text-9xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 bg-clip-text text-transparent mb-6 tracking-tight drop-shadow-2xl">
+          <h1 className="text-8xl md:text-9xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 bg-clip-text text-transparent mb-6 tracking-tight drop-shadow-2xl" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
             MyDoc-AI
           </h1>
           
           {/* Sous-titre ultra */}
-          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-gray-800 drop-shadow-lg">
+          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-gray-800 drop-shadow-lg" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
             {t.subtitle}
           </p>
         </div>
 
         {/* Search Bar Ultra Premium */}
         <div className="w-full max-w-4xl mb-8 animate-fade-in-up">
-          <div className="relative group">
-            {/* Effet de lueur autour de la barre de recherche */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-cyan-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <div className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-2 shadow-2xl">
-              <div className="flex items-center">
-                <div className="absolute left-6 flex items-center pointer-events-none z-10">
-                  <Search className="h-7 w-7 text-blue-500" />
-                </div>
+          <div className="flex items-center space-x-4">
+            {/* Barre de recherche séparée */}
+            <div className="flex-1 relative group">
+              {/* Effet de lueur autour de la barre de recherche */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-cyan-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative bg-white/90 backdrop-blur-xl border border-gray-200 rounded-3xl p-2 shadow-2xl">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={handleKeyPress}
                   placeholder={t.searchPlaceholder}
-                  className="flex-1 pl-16 pr-6 py-8 bg-transparent text-gray-800 text-2xl placeholder-gray-500 focus:outline-none font-medium"
+                  className="w-full pl-8 pr-8 py-8 bg-transparent text-gray-800 text-2xl placeholder-gray-500 focus:outline-none font-medium"
+                  style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}
                 />
-                <button
-                  type="button"
-                  onClick={handleSearch}
-                  disabled={isSearching || !searchQuery.trim()}
-                  className="mr-2 px-8 py-8 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white font-black text-xl rounded-2xl hover:from-blue-700 hover:via-purple-700 hover:to-cyan-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xl hover:shadow-3xl transform hover:scale-105 disabled:hover:scale-100 min-w-[200px]"
-                >
-                  {isSearching ? (
-                    <div className="flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-6 w-6 border-3 border-white border-t-transparent mr-3"></div>
-                      <span>Analyse...</span>
-                    </div>
-                  ) : (
-                    <span>🔍 Analyser</span>
-                  )}
-                </button>
               </div>
             </div>
+            
+            {/* Bouton d'analyse séparé */}
+            <button
+              type="button"
+              onClick={handleSearch}
+              disabled={isSearching || !searchQuery.trim()}
+              className="px-8 py-8 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white font-black text-xl rounded-3xl hover:from-blue-700 hover:via-purple-700 hover:to-cyan-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xl hover:shadow-3xl transform hover:scale-105 disabled:hover:scale-100 min-w-[200px] flex items-center justify-center space-x-3"
+              style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}
+            >
+              <Search className="h-6 w-6" />
+              {isSearching ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-3 border-white border-t-transparent mr-3"></div>
+                  <span>Analyse...</span>
+                </div>
+              ) : (
+                <span>Analyser</span>
+              )}
+            </button>
           </div>
         </div>
 
         {/* Example Ultra Premium */}
         <div className="bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl px-8 py-4 mb-16 shadow-lg">
-          <p className="text-lg md:text-xl font-medium text-gray-700 text-center">
+          <p className="text-lg md:text-xl font-medium text-gray-700 text-center" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
             {t.example}
           </p>
         </div>
@@ -236,20 +239,20 @@ export default function MyDocAI() {
             <div className="mb-10 pb-8 border-b border-gray-300">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
-                  <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-gray-800 drop-shadow-lg">
+                  <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-gray-800 drop-shadow-lg" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
                     {diagnosis.condition}
                   </h2>
                   <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center space-x-3 bg-blue-100 px-6 py-3 rounded-full border border-blue-200">
-                      <span className="text-2xl font-black text-blue-800">{diagnosis.probability}%</span>
-                      <span className="text-lg font-bold text-blue-700">Probabilité</span>
+                      <span className="text-2xl font-black text-blue-800" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>{diagnosis.probability}%</span>
+                      <span className="text-lg font-bold text-blue-700" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>Probabilité</span>
                     </div>
                     <span className={`px-6 py-3 rounded-full text-lg font-black border-2 ${
                       diagnosis.urgency === 'critical' ? 'bg-red-100 border-red-400 text-red-800' :
                       diagnosis.urgency === 'high' ? 'bg-orange-100 border-orange-400 text-orange-800' :
                       diagnosis.urgency === 'medium' ? 'bg-yellow-100 border-yellow-400 text-yellow-800' :
                       'bg-green-100 border-green-400 text-green-800'
-                    }`}>
+                    }`} style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
                       {diagnosis.urgency === 'critical' ? '🚨 Urgent' :
                        diagnosis.urgency === 'high' ? '⚠️ Élevé' :
                        diagnosis.urgency === 'medium' ? '⏱️ Modéré' : '✅ Faible'}
@@ -261,7 +264,7 @@ export default function MyDocAI() {
 
             {/* Description ultra */}
             <div className="mb-10">
-              <h3 className="text-2xl font-black mb-4 text-gray-800 flex items-center">
+              <h3 className="text-2xl font-black mb-4 text-gray-800 flex items-center" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
                 <span className="mr-3">📋</span>
                 Description
               </h3>
