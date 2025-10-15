@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeSymptoms, getPersonalizedRecommendations, calculateUrgency } from '@/lib/medical-database';
 import { callGeminiMedical, callOpenAIMedical, callOpenRouterMedical } from '@/lib/medical-ai-services';
-import { getTreatmentForCondition, searchTr
-  eatmentsBySymptom } from '@/lib/medical-treatments';
+import { getTreatmentForCondition, searchTreatmentsBySymptom } from '@/lib/medical-treatments';
 import { getUniversalTreatmentsForSymptom, generateIntegrativePlan } from '@/lib/universal-medicine';
 
 // Cache simple en mémoire
