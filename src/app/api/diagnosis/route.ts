@@ -14,17 +14,18 @@ export async function POST(request: NextRequest) {
     const { symptoms, doctorId, clarificationAnswers } = body;
 
     if (!symptoms || !Array.isArray(symptoms) || symptoms.length === 0) {
-      return NextResponse.json(
-        { error: 'Symptômes requis' },
-        { 
-          status: 400,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        return NextResponse.json(
+          { error: 'Symptômes requis' },
+          {
+            status: 400,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+              'Access-Control-Allow-Credentials': 'true',
+            }
           }
-        }
-      );
+        );
     }
 
     // Vérifier le cache
@@ -224,23 +225,25 @@ export async function POST(request: NextRequest) {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        'Access-Control-Allow-Credentials': 'true',
       }
     });
 
   } catch (error) {
     console.error('Erreur dans l\'API de diagnostic:', error);
-    return NextResponse.json(
-      { error: 'Erreur interne du serveur' },
-      { 
-        status: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-      }
-    );
+        return NextResponse.json(
+          { error: 'Erreur interne du serveur' },
+          {
+            status: 500,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+              'Access-Control-Allow-Credentials': 'true',
+            }
+          }
+        );
   }
 }
 
@@ -250,7 +253,8 @@ export async function OPTIONS() {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+      'Access-Control-Allow-Credentials': 'true',
     },
   });
 }
@@ -266,10 +270,11 @@ export async function GET() {
       'dr-james'
     ]
   }, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    }
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        'Access-Control-Allow-Credentials': 'true',
+      }
   });
 }
