@@ -12,15 +12,20 @@ function initializeGemini(apiKey: string) {
 }
 
 // Fonction pour appeler Gemini Pro avec prompt médical spécialisé
-export async function callGeminiMedical(symptoms: string[], doctorId: string, apiKey: string): Promise<any> {
+export async function callGeminiMedical(symptoms: string[], doctorId: string, apiKey: string, clarificationAnswers?: Record<string, string>): Promise<any> {
   try {
     const genAI = initializeGemini(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const clarificationContext = clarificationAnswers 
+      ? `\n\nINFORMATIONS SUPPLÉMENTAIRES (réponses aux questions de clarification):\n${Object.entries(clarificationAnswers).map(([key, value]) => `- ${key}: ${value}`).join('\n')}`
+      : '';
 
     const medicalPrompt = `
 Tu es un médecin IA expert en diagnostic médical. Analyse les symptômes suivants et fournis un diagnostic médical détaillé et professionnel.
 
 SYMPTÔMES: ${symptoms.join(', ')}
+${clarificationContext}
 
 DOCTEUR: ${doctorId}
 
@@ -69,13 +74,18 @@ IMPORTANT:
 }
 
 // Fonction pour appeler OpenAI avec prompt médical spécialisé
-export async function callOpenAIMedical(symptoms: string[], doctorId: string, apiKey: string): Promise<any> {
+export async function callOpenAIMedical(symptoms: string[], doctorId: string, apiKey: string, clarificationAnswers?: Record<string, string>): Promise<any> {
   try {
     const openai = new OpenAI({ apiKey });
+
+    const clarificationContext = clarificationAnswers 
+      ? `\n\nINFORMATIONS SUPPLÉMENTAIRES (réponses aux questions de clarification):\n${Object.entries(clarificationAnswers).map(([key, value]) => `- ${key}: ${value}`).join('\n')}`
+      : '';
 
     const medicalPrompt = `Tu es un médecin IA expert en diagnostic médical. Analyse les symptômes suivants et fournis un diagnostic médical détaillé et professionnel.
 
 SYMPTÔMES: ${symptoms.join(', ')}
+${clarificationContext}
 DOCTEUR: ${doctorId}
 
 Réponds UNIQUEMENT avec un JSON valide contenant:
@@ -136,7 +146,7 @@ IMPORTANT:
 }
 
 // Fonction pour appeler OpenRouter avec modèles médicaux spécialisés
-export async function callOpenRouterMedical(symptoms: string[], doctorId: string, apiKey: string): Promise<any> {
+export async function callOpenRouterMedical(symptoms: string[], doctorId: string, apiKey: string, clarificationAnswers?: Record<string, string>): Promise<any> {
   // Modèles médicaux spécialisés par ordre de préférence
   const MEDICAL_MODELS = [
     'anthropic/claude-3.5-sonnet', // Excellent pour le raisonnement médical
@@ -150,9 +160,14 @@ export async function callOpenRouterMedical(symptoms: string[], doctorId: string
     try {
       console.log(`Tentative diagnostic médical avec: ${model}`);
       
+      const clarificationContext = clarificationAnswers 
+        ? `\n\nINFORMATIONS SUPPLÉMENTAIRES (réponses aux questions de clarification):\n${Object.entries(clarificationAnswers).map(([key, value]) => `- ${key}: ${value}`).join('\n')}`
+        : '';
+
       const medicalPrompt = `Tu es un médecin IA expert en diagnostic médical. Analyse les symptômes suivants et fournis un diagnostic médical détaillé et professionnel.
 
 SYMPTÔMES: ${symptoms.join(', ')}
+${clarificationContext}
 DOCTEUR: ${doctorId}
 
 Réponds UNIQUEMENT avec un JSON valide contenant:

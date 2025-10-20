@@ -11,12 +11,19 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-        const { symptoms, doctorId } = body;
+    const { symptoms, doctorId, clarificationAnswers } = body;
 
     if (!symptoms || !Array.isArray(symptoms) || symptoms.length === 0) {
       return NextResponse.json(
         { error: 'Symptômes requis' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       );
     }
 
@@ -43,7 +50,7 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Tentative diagnostic avec Gemini Pro (gratuit)...');
         aiDiagnosis = await Promise.race([
-          callGeminiMedical(symptoms, 'universal-ai', geminiKey),
+          callGeminiMedical(symptoms, 'universal-ai', geminiKey, clarificationAnswers),
           new Promise((_, reject) => 
             setTimeout(() => reject(new Error('Timeout Gemini')), 15000)
           )
@@ -59,7 +66,7 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Tentative diagnostic avec OpenAI GPT-4o...');
         aiDiagnosis = await Promise.race([
-          callOpenAIMedical(symptoms, 'universal-ai', openAIKey),
+          callOpenAIMedical(symptoms, 'universal-ai', openAIKey, clarificationAnswers),
           new Promise((_, reject) => 
             setTimeout(() => reject(new Error('Timeout OpenAI')), 15000)
           )
@@ -75,7 +82,7 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Tentative diagnostic avec OpenRouter...');
         aiDiagnosis = await Promise.race([
-          callOpenRouterMedical(symptoms, 'universal-ai', openRouterKey),
+          callOpenRouterMedical(symptoms, 'universal-ai', openRouterKey, clarificationAnswers),
           new Promise((_, reject) => 
             setTimeout(() => reject(new Error('Timeout OpenRouter')), 20000)
           )
@@ -213,15 +220,39 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(finalDiagnosis);
+    return NextResponse.json(finalDiagnosis, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
+    });
 
   } catch (error) {
     console.error('Erreur dans l\'API de diagnostic:', error);
     return NextResponse.json(
       { error: 'Erreur interne du serveur' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      }
     );
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 }
 
 export async function GET() {
@@ -234,5 +265,11 @@ export async function GET() {
       'dr-elena',
       'dr-james'
     ]
+  }, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
   });
 }

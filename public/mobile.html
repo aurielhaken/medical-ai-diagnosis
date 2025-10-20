@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDoc-AI - Intelligence Médicale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e0f2fe;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-selector {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 14px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin-bottom: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .app-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #e0f2fe;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* Search Container */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 15px 20px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 40px;
+            padding: 15px 25px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .search-icon {
+            font-size: 18px;
+        }
+
+        .example-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #e0f2fe;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .feature-tag.hot {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .feature-tag.new {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e0f2fe;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Chat Interface */
+        .chat-interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e0f2fe;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .message-avatar.ai {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .message-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+
+        .chat-input {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .message-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .new-consultation-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .new-consultation-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Medical Analysis */
+        .medical-analysis {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .analysis-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e0f2fe;
+        }
+
+        .analysis-date {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .diagnosis-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .diagnosis-name {
+            font-size: 18px;
+            color: #e0f2fe;
+        }
+
+        .diagnosis-probability {
+            font-size: 24px;
+            font-weight: bold;
+            color: #a78bfa;
+        }
+
+        .recommendations {
+            margin-top: 20px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .recommendation-icon {
+            color: #10b981;
+            font-size: 18px;
+        }
+
+        .recommendation-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 36px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-container {
+                margin: 0 10px 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">🏥</div>
+            <div class="header-title">MyDoc-AI</div>
+        </div>
+        <div class="header-right">
+            <select class="lang-selector" onchange="switchLanguage(this.value)">
+                <option value="fr">🇫🇷 FR</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="he">🇮🇱 HE</option>
+                <option value="es">🇪🇸 ES</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="logo-container">
+                <div class="logo-large">🏥</div>
+                <h1 class="app-title">MyDoc-AI</h1>
+                <p class="app-subtitle">Intelligence Médicale</p>
+            </div>
+            
+            <h2 class="main-title">Diagnostic Médical</h2>
+            <p class="main-subtitle">Décrivez vos symptômes et obtenez un diagnostic préliminaire</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Décrivez vos symptômes..." id="searchInput">
+                <button class="search-button" onclick="startDiagnosis()">
+                    <span class="search-icon">🔍</span>
+                    <span class="search-text">Rechercher</span>
+                </button>
+            </div>
+            
+            <p class="example-text">Exemple : J'ai de la fièvre et des maux de tête</p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2 class="features-title">Fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-card" onclick="openChat()">
+                    <div class="feature-tag new">NEW!</div>
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">Chat Médical IA</h3>
+                    <p class="feature-description">Posez vos questions de santé à tout moment. Notre IA médicale vous répond 24/7 avec des réponses personnalisées et précises.</p>
+                    <button class="feature-button">Commencer le chat</button>
+                </div>
+                
+                <div class="feature-card" onclick="startDiagnosis()">
+                    <div class="feature-tag hot">HOT!</div>
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Diagnostic Intelligent</h3>
+                    <p class="feature-description">Analysez vos symptômes avec notre IA avancée. Obtenez un diagnostic préliminaire avec des recommandations personnalisées.</p>
+                    <button class="feature-button">Analyser mes symptômes</button>
+                </div>
+                
+                <div class="feature-card" onclick="openDictionary()">
+                    <div class="feature-tag">TRY NOW!</div>
+                    <div class="feature-icon">📚</div>
+                    <h3 class="feature-title">Dictionnaire Médical</h3>
+                    <p class="feature-description">Consultez notre base de données médicale complète. Termes, définitions et explications claires pour mieux comprendre votre santé.</p>
+                    <button class="feature-button">Explorer le dictionnaire</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="chat-interface" id="chatInterface">
+        <div class="chat-header">
+            <button class="back-button" onclick="closeChat()">←</button>
+            <div class="chat-title">Chat Médical IA</div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+                <div class="message-avatar ai">🤖</div>
+                <div>
+                    <div class="message-bubble">
+                        Bonjour ! Je suis votre assistant médical IA. Comment puis-je vous aider aujourd'hui ?
+                    </div>
+                    <div class="message-time">Maintenant</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="medical-analysis" id="medicalAnalysis">
+            <div class="analysis-header">
+                <span>🏥</span>
+                <span class="analysis-title">Analyse Médicale</span>
+                <span class="analysis-date">2025-01-20</span>
+            </div>
+            <div class="diagnosis-item">
+                <span class="diagnosis-name">Diagnostic</span>
+                <span class="diagnosis-probability">85%</span>
+            </div>
+            <div class="recommendations">
+                <div class="recommendation-item">
+                    <span class="recommendation-icon">✅</span>
+                    <span class="recommendation-text">Consultez un médecin pour un examen physique</span>
+                </div>
+                <div class="recommendation-item">
+                    <span class="recommendation-icon">✅</span>
+                    <span class="recommendation-text">Prenez des anti-inflammatoires selon prescription</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" class="message-input" placeholder="Écrivez votre message..." id="messageInput" onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()">📤</button>
+            <button class="new-consultation-button" onclick="startNewConsultation()" title="Nouvelle consultation">🔄</button>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'fr';
+        let chatHistory = [];
+        let conversationState = {
+            hasSymptoms: false,
+            hasDuration: false,
+            hasIntensity: false,
+            hasLocation: false,
+            hasOtherSymptoms: false,
+            hasMedicalHistory: false,
+            symptoms: '',
+            duration: '',
+            intensity: '',
+            location: '',
+            otherSymptoms: '',
+            medicalHistory: ''
+        };
+
+        // Multilingual content
+        const translations = {
+            fr: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "Intelligence Médicale",
+                mainTitle: "Diagnostic Médical",
+                mainSubtitle: "Décrivez vos symptômes et obtenez un diagnostic préliminaire",
+                searchPlaceholder: "Décrivez vos symptômes...",
+                searchButton: "Rechercher",
+                exampleText: "Exemple : J'ai de la fièvre et des maux de tête",
+                featuresTitle: "Fonctionnalités",
+                chatTitle: "Chat Médical IA",
+                chatDescription: "Posez vos questions de santé à tout moment. Notre IA médicale vous répond 24/7 avec des réponses personnalisées et précises.",
+                diagnosisTitle: "Diagnostic Intelligent",
+                diagnosisDescription: "Analysez vos symptômes avec notre IA avancée. Obtenez un diagnostic préliminaire avec des recommandations personnalisées.",
+                dictionaryTitle: "Dictionnaire Médical",
+                dictionaryDescription: "Consultez notre base de données médicale complète. Termes, définitions et explications claires pour mieux comprendre votre santé.",
+                welcome: "Bonjour ! Je suis votre assistant médical IA. Comment puis-je vous aider aujourd'hui ?",
+                thanks: "Merci pour ces informations. Avez-vous pris des médicaments récemment ?",
+                painQuestion: "Je comprends que vous ressentez de la douleur. Pouvez-vous me dire depuis combien de temps ?",
+                intensityQuestion: "Sur une échelle de 1 à 10, comment évaluez-vous l'intensité de cette douleur ?",
+                locationQuestion: "Pouvez-vous me préciser exactement où vous ressentez cette douleur ?",
+                otherSymptoms: "Avez-vous d'autres symptômes associés comme de la fièvre, des nausées ou des vertiges ?",
+                medicalHistory: "Avez-vous des antécédents médicaux particuliers ou des allergies connues ?",
+                analysis: "Analyse Médicale",
+                diagnostic: "Diagnostic",
+                recommendations: "Recommandations",
+                consultDoctor: "Consultez un médecin pour un examen physique",
+                takeMedication: "Prenez des anti-inflammatoires selon prescription",
+                writeMessage: "Écrivez votre message...",
+                startChat: "Commencer le chat",
+                analyzeSymptoms: "Analyser mes symptômes",
+                exploreDictionary: "Explorer le dictionnaire"
+            },
+            en: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "Medical Intelligence",
+                mainTitle: "Medical Diagnosis",
+                mainSubtitle: "Describe your symptoms and get a preliminary diagnosis",
+                searchPlaceholder: "Describe your symptoms...",
+                searchButton: "Search",
+                exampleText: "Example: I have fever and headaches",
+                featuresTitle: "Features",
+                chatTitle: "AI Medical Chat",
+                chatDescription: "Ask your health questions anytime. Our medical AI responds 24/7 with personalized and accurate answers.",
+                diagnosisTitle: "Intelligent Diagnosis",
+                diagnosisDescription: "Analyze your symptoms with our advanced AI. Get a preliminary diagnosis with personalized recommendations.",
+                dictionaryTitle: "Medical Dictionary",
+                dictionaryDescription: "Consult our complete medical database. Terms, definitions and clear explanations to better understand your health.",
+                welcome: "Hello! I am your AI medical assistant. How can I help you today?",
+                thanks: "Thank you for this information. Have you taken any medication recently?",
+                painQuestion: "I understand you're experiencing pain. Can you tell me how long this has been going on?",
+                intensityQuestion: "On a scale of 1 to 10, how would you rate the intensity of this pain?",
+                locationQuestion: "Can you tell me exactly where you feel this pain?",
+                otherSymptoms: "Do you have any other associated symptoms like fever, nausea, or dizziness?",
+                medicalHistory: "Do you have any particular medical history or known allergies?",
+                analysis: "Medical Analysis",
+                diagnostic: "Diagnostic",
+                recommendations: "Recommendations",
+                consultDoctor: "Consult a doctor for a physical examination",
+                takeMedication: "Take anti-inflammatory drugs as prescribed",
+                writeMessage: "Write your message...",
+                startChat: "Start chat",
+                analyzeSymptoms: "Analyze my symptoms",
+                exploreDictionary: "Explore dictionary"
+            },
+            he: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "בינה רפואית",
+                mainTitle: "אבחון רפואי",
+                mainSubtitle: "תאר את התסמינים שלך וקבל אבחון ראשוני",
+                searchPlaceholder: "תאר את התסמינים שלך...",
+                searchButton: "חיפוש",
+                exampleText: "דוגמה: יש לי חום וכאבי ראש",
+                featuresTitle: "תכונות",
+                chatTitle: "צ'אט רפואי AI",
+                chatDescription: "שאל שאלות בריאות בכל עת. ה-AI הרפואי שלנו עונה 24/7 עם תשובות מותאמות אישית ומדויקות.",
+                diagnosisTitle: "אבחון חכם",
+                diagnosisDescription: "נתח את התסמינים שלך עם ה-AI המתקדם שלנו. קבל אבחון ראשוני עם המלצות מותאמות אישית.",
+                dictionaryTitle: "מילון רפואי",
+                dictionaryDescription: "התייעץ עם מסד הנתונים הרפואי המלא שלנו. מונחים, הגדרות והסברים ברורים להבנה טובה יותר של הבריאות שלך.",
+                welcome: "שלום! אני העוזר הרפואי שלך בבינה מלאכותית. איך אוכל לעזור לך היום?",
+                thanks: "תודה על המידע. האם לקחת תרופות לאחרונה?",
+                painQuestion: "אני מבין שאתה חווה כאב. תוכל לספר לי כמה זמן זה נמשך?",
+                intensityQuestion: "בסולם של 1 עד 10, איך תדרג את עוצמת הכאב הזה?",
+                locationQuestion: "תוכל לספר לי בדיוק איפה אתה מרגיש את הכאב הזה?",
+                otherSymptoms: "האם יש לך תסמינים אחרים הקשורים כמו חום, בחילה או סחרחורת?",
+                medicalHistory: "האם יש לך היסטוריה רפואית מסוימת או אלרגיות ידועות?",
+                analysis: "ניתוח רפואי",
+                diagnostic: "אבחון",
+                recommendations: "המלצות",
+                consultDoctor: "התייעץ עם רופא לבדיקה גופנית",
+                takeMedication: "קח תרופות אנטי דלקתיות לפי מרשם",
+                writeMessage: "כתוב את ההודעה שלך...",
+                startChat: "התחל צ'אט",
+                analyzeSymptoms: "נתח את התסמינים שלי",
+                exploreDictionary: "חקור את המילון"
+            },
+            es: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "Inteligencia Médica",
+                mainTitle: "Diagnóstico Médico",
+                mainSubtitle: "Describe tus síntomas y obtén un diagnóstico preliminar",
+                searchPlaceholder: "Describe tus síntomas...",
+                searchButton: "Buscar",
+                exampleText: "Ejemplo: Tengo fiebre y dolores de cabeza",
+                featuresTitle: "Características",
+                chatTitle: "Chat Médico IA",
+                chatDescription: "Haz tus preguntas de salud en cualquier momento. Nuestra IA médica responde 24/7 con respuestas personalizadas y precisas.",
+                diagnosisTitle: "Diagnóstico Inteligente",
+                diagnosisDescription: "Analiza tus síntomas con nuestra IA avanzada. Obtén un diagnóstico preliminar con recomendaciones personalizadas.",
+                dictionaryTitle: "Diccionario Médico",
+                dictionaryDescription: "Consulta nuestra base de datos médica completa. Términos, definiciones y explicaciones claras para entender mejor tu salud.",
+                welcome: "¡Hola! Soy tu asistente médico de IA. ¿Cómo puedo ayudarte hoy?",
+                thanks: "Gracias por esta información. ¿Ha tomado algún medicamento recientemente?",
+                painQuestion: "Entiendo que estás experimentando dolor. ¿Puedes decirme cuánto tiempo lleva esto?",
+                intensityQuestion: "En una escala del 1 al 10, ¿cómo calificarías la intensidad de este dolor?",
+                locationQuestion: "¿Puedes decirme exactamente dónde sientes este dolor?",
+                otherSymptoms: "¿Tienes otros síntomas asociados como fiebre, náuseas o mareos?",
+                medicalHistory: "¿Tienes algún historial médico particular o alergias conocidas?",
+                analysis: "Análisis Médico",
+                diagnostic: "Diagnóstico",
+                recommendations: "Recomendaciones",
+                consultDoctor: "Consulte a un médico para un examen físico",
+                takeMedication: "Tome antiinflamatorios según prescripción",
+                writeMessage: "Escriba su mensaje...",
+                startChat: "Iniciar chat",
+                analyzeSymptoms: "Analizar mis síntomas",
+                exploreDictionary: "Explorar diccionario"
+            }
+        };
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            updateUILanguage();
+        }
+
+        function updateUILanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update main content
+            document.querySelector('.app-title').textContent = t.appTitle;
+            document.querySelector('.app-subtitle').textContent = t.appSubtitle;
+            document.querySelector('.main-title').textContent = t.mainTitle;
+            document.querySelector('.main-subtitle').textContent = t.mainSubtitle;
+            document.querySelector('#searchInput').placeholder = t.searchPlaceholder;
+            document.querySelector('.search-text').textContent = t.searchButton;
+            document.querySelector('.example-text').textContent = t.exampleText;
+            document.querySelector('.features-title').textContent = t.featuresTitle;
+            
+            // Update feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            const featureTitles = document.querySelectorAll('.feature-title');
+            const featureDescriptions = document.querySelectorAll('.feature-description');
+            const featureButtons = document.querySelectorAll('.feature-button');
+            
+            featureTitles[0].textContent = t.chatTitle;
+            featureTitles[1].textContent = t.diagnosisTitle;
+            featureTitles[2].textContent = t.dictionaryTitle;
+            
+            featureDescriptions[0].textContent = t.chatDescription;
+            featureDescriptions[1].textContent = t.diagnosisDescription;
+            featureDescriptions[2].textContent = t.dictionaryDescription;
+            
+            featureButtons[0].textContent = t.startChat;
+            featureButtons[1].textContent = t.analyzeSymptoms;
+            featureButtons[2].textContent = t.exploreDictionary;
+            
+            // Update chat interface
+            document.querySelector('.chat-title').textContent = t.chatTitle;
+            document.querySelector('#messageInput').placeholder = t.writeMessage;
+        }
+
+        function startDiagnosis() {
+            const searchInput = document.getElementById('searchInput');
+            const symptoms = searchInput.value.trim();
+            
+            if (!symptoms) {
+                alert('Veuillez décrire vos symptômes avant de rechercher.');
+                return;
+            }
+            
+            // Open chat with symptoms
+            openChat();
+            addMessage(symptoms, 'user');
+            
+            // Generate AI response
+            setTimeout(() => {
+                const response = generatePersonalizedResponse(symptoms);
+                addMessage(response, 'ai');
+                showMedicalAnalysis();
+            }, 2000);
+        }
+
+        function openChat() {
+            document.getElementById('chatInterface').style.display = 'flex';
+            document.querySelector('.main-content').style.display = 'none';
+        }
+
+        function closeChat() {
+            document.getElementById('chatInterface').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'block';
+        }
+
+        function openDictionary() {
+            alert('Dictionnaire médical - Fonctionnalité à venir !');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Generate AI response
+            setTimeout(() => {
+                const response = generatePersonalizedResponse(message);
+                addMessage(response, 'ai');
+                
+                if (isMedicalRelated(message)) {
+                    showMedicalAnalysis();
+                }
+            }, 1500);
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const time = new Date().toLocaleTimeString('fr-FR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar ${sender}">${sender === 'user' ? '👤' : '🤖'}</div>
+                <div>
+                    <div class="message-bubble">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generatePersonalizedResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            const t = translations[currentLanguage];
+            
+            // Detect language
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                currentLanguage = 'en';
+            } else if (lowerMessage.includes('שלום') || lowerMessage.includes('היי')) {
+                currentLanguage = 'he';
+            } else if (lowerMessage.includes('hola') || lowerMessage.includes('buenos')) {
+                currentLanguage = 'es';
+            } else if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut')) {
+                currentLanguage = 'fr';
+            }
+            
+            updateUILanguage();
+            
+            // Store the message in conversation state
+            storeConversationData(message, lowerMessage);
+            
+            // Generate response based on conversation state
+            return generateContextualResponse(t);
+        }
+
+        function storeConversationData(message, lowerMessage) {
+            // Store symptoms (only if not already stored)
+            if (!conversationState.hasSymptoms && (lowerMessage.includes('mal') || lowerMessage.includes('douleur') || 
+                lowerMessage.includes('pain') || lowerMessage.includes('hurt') ||
+                lowerMessage.includes('כאב') || lowerMessage.includes('dolor') ||
+                lowerMessage.includes('ventre') || lowerMessage.includes('stomach') ||
+                lowerMessage.includes('בטן') || lowerMessage.includes('vientre'))) {
+                conversationState.hasSymptoms = true;
+                conversationState.symptoms = message;
+            }
+            
+            // Store duration (only if not already stored)
+            if (!conversationState.hasDuration && (lowerMessage.includes('depuis') || lowerMessage.includes('since') || 
+                lowerMessage.includes('מאז') || lowerMessage.includes('desde') ||
+                lowerMessage.includes('jour') || lowerMessage.includes('day') ||
+                lowerMessage.includes('יום') || lowerMessage.includes('día') ||
+                lowerMessage.match(/\d+\s*(jour|day|יום|día)/))) {
+                conversationState.hasDuration = true;
+                conversationState.duration = message;
+            }
+            
+            // Store intensity (numbers 1-10, only if not already stored)
+            if (!conversationState.hasIntensity && lowerMessage.match(/\b[1-9]|10\b/)) {
+                conversationState.hasIntensity = true;
+                conversationState.intensity = message;
+            }
+            
+            // Store location (only if not already stored)
+            if (!conversationState.hasLocation && (lowerMessage.includes('gauche') || lowerMessage.includes('droite') ||
+                lowerMessage.includes('left') || lowerMessage.includes('right') ||
+                lowerMessage.includes('שמאל') || lowerMessage.includes('ימין') ||
+                lowerMessage.includes('izquierda') || lowerMessage.includes('derecha') ||
+                lowerMessage.includes('ballonements') || lowerMessage.includes('bloating') ||
+                lowerMessage.includes('נפיחות') || lowerMessage.includes('hinchazón') ||
+                lowerMessage.includes('côté') || lowerMessage.includes('side'))) {
+                conversationState.hasLocation = true;
+                conversationState.location = message;
+            }
+            
+            // Store other symptoms (only if not already stored)
+            if (!conversationState.hasOtherSymptoms && (lowerMessage.includes('fièvre') || lowerMessage.includes('fever') ||
+                lowerMessage.includes('חום') || lowerMessage.includes('fiebre') ||
+                lowerMessage.includes('nausée') || lowerMessage.includes('nausea') ||
+                lowerMessage.includes('בחילה') || lowerMessage.includes('náusea') ||
+                lowerMessage.includes('vertige') || lowerMessage.includes('dizzy') ||
+                lowerMessage.includes('סחרחורת') || lowerMessage.includes('mareo'))) {
+                conversationState.hasOtherSymptoms = true;
+                conversationState.otherSymptoms = message;
+            }
+            
+            // Store medical history (only if not already stored)
+            if (!conversationState.hasMedicalHistory && (lowerMessage.includes('médicament') || lowerMessage.includes('medication') ||
+                lowerMessage.includes('תרופה') || lowerMessage.includes('medicamento') ||
+                lowerMessage.includes('allergie') || lowerMessage.includes('allergy') ||
+                lowerMessage.includes('אלרגיה') || lowerMessage.includes('alergia') ||
+                lowerMessage.includes('non') || lowerMessage.includes('no') ||
+                lowerMessage.includes('לא') || lowerMessage.includes('no'))) {
+                conversationState.hasMedicalHistory = true;
+                conversationState.medicalHistory = message;
+            }
+        }
+
+        function generateContextualResponse(t) {
+            // If we have enough information, call the real API
+            if (conversationState.hasSymptoms && conversationState.hasDuration && 
+                conversationState.hasIntensity && conversationState.hasLocation) {
+                return callRealMedicalAPI(t);
+            }
+            
+            // Progressive questioning based on what we know
+            if (!conversationState.hasSymptoms) {
+                return t.painQuestion;
+            }
+            
+            if (conversationState.hasSymptoms && !conversationState.hasDuration) {
+                return t.intensityQuestion;
+            }
+            
+            if (conversationState.hasDuration && !conversationState.hasIntensity) {
+                return t.intensityQuestion;
+            }
+            
+            if (conversationState.hasIntensity && !conversationState.hasLocation) {
+                return t.locationQuestion;
+            }
+            
+            if (conversationState.hasLocation && !conversationState.hasOtherSymptoms) {
+                return t.otherSymptoms;
+            }
+            
+            if (conversationState.hasOtherSymptoms && !conversationState.hasMedicalHistory) {
+                return t.medicalHistory;
+            }
+            
+            // If we have everything, call the real API
+            return callRealMedicalAPI(t);
+        }
+
+        async function callRealMedicalAPI(t) {
+            try {
+                // Prepare symptoms for API
+                const symptoms = [
+                    conversationState.symptoms,
+                    `Durée: ${conversationState.duration}`,
+                    `Intensité: ${conversationState.intensity}/10`,
+                    `Localisation: ${conversationState.location}`
+                ].filter(s => s).join(', ');
+
+                console.log('Appel API avec symptômes:', symptoms);
+
+                // Call the real MyDoc-AI API
+                const response = await fetch('https://mydoc-ai.com/api/diagnosis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptoms: [symptoms],
+                        doctorId: 'mydoc-ai'
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Réponse API:', data);
+
+                // Reset conversation state
+                resetConversationState();
+
+                // Show medical analysis with real data
+                setTimeout(() => {
+                    showRealMedicalAnalysis(data);
+                }, 1000);
+
+                return `Merci pour ces informations détaillées. J'ai analysé vos symptômes avec notre IA médicale avancée et je vais vous fournir un diagnostic préliminaire avec des recommandations personnalisées.`;
+
+            } catch (error) {
+                console.error('Erreur API:', error);
+                
+                // Fallback to basic analysis
+                resetConversationState();
+                setTimeout(() => {
+                    showMedicalAnalysis();
+                }, 1000);
+                
+                return `Merci pour ces informations. Basé sur vos symptômes (${conversationState.symptoms}), la durée (${conversationState.duration}), l'intensité (${conversationState.intensity}/10) et la localisation (${conversationState.location}), je recommande de consulter un médecin pour un examen approfondi.`;
+            }
+        }
+
+        function showRealMedicalAnalysis(data) {
+            const analysis = document.getElementById('medicalAnalysis');
+            if (!analysis) return;
+
+            // Update analysis with real data
+            const analysisTitle = analysis.querySelector('.analysis-title');
+            const diagnosisName = analysis.querySelector('.diagnosis-name');
+            const diagnosisProbability = analysis.querySelector('.diagnosis-probability');
+            const recommendationsList = analysis.querySelector('.recommendations');
+
+            if (analysisTitle) analysisTitle.textContent = 'Analyse Médicale IA';
+            if (diagnosisName) diagnosisName.textContent = 'Diagnostic';
+            if (diagnosisProbability) diagnosisProbability.textContent = `${data.probability || 85}%`;
+
+            // Update recommendations with real data
+            if (recommendationsList) {
+                recommendationsList.innerHTML = '';
+                if (data.recommendations && data.recommendations.length > 0) {
+                    data.recommendations.forEach(rec => {
+                        const recItem = document.createElement('div');
+                        recItem.className = 'recommendation-item';
+                        recItem.innerHTML = `
+                            <span class="recommendation-icon">✅</span>
+                            <span class="recommendation-text">${rec}</span>
+                        `;
+                        recommendationsList.appendChild(recItem);
+                    });
+                } else {
+                    const recItem = document.createElement('div');
+                    recItem.className = 'recommendation-item';
+                    recItem.innerHTML = `
+                        <span class="recommendation-icon">✅</span>
+                        <span class="recommendation-text">Consultez un médecin pour un examen physique</span>
+                    `;
+                    recommendationsList.appendChild(recItem);
+                }
+            }
+
+            analysis.style.display = 'block';
+            analysis.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateMedicalAnalysis(t) {
+            const symptoms = conversationState.symptoms;
+            const duration = conversationState.duration;
+            const intensity = conversationState.intensity;
+            const location = conversationState.location;
+            
+            // Reset conversation state for next consultation
+            resetConversationState();
+            
+            // Show medical analysis
+            setTimeout(() => {
+                showMedicalAnalysis();
+            }, 1000);
+            
+            return `Merci pour ces informations détaillées. Basé sur vos symptômes (${symptoms}), la durée (${duration}), l'intensité (${intensity}/10) et la localisation (${location}), je vais maintenant analyser votre situation et vous fournir des recommandations personnalisées.`;
+        }
+
+        function resetConversationState() {
+            conversationState = {
+                hasSymptoms: false,
+                hasDuration: false,
+                hasIntensity: false,
+                hasLocation: false,
+                hasOtherSymptoms: false,
+                hasMedicalHistory: false,
+                symptoms: '',
+                duration: '',
+                intensity: '',
+                location: '',
+                otherSymptoms: '',
+                medicalHistory: ''
+            };
+        }
+
+        function isMedicalRelated(message) {
+            const medicalKeywords = [
+                'mal', 'douleur', 'symptôme', 'fièvre', 'nausée', 'vertige',
+                'pain', 'hurt', 'symptom', 'fever', 'nausea', 'dizzy',
+                'כאב', 'תסמין', 'חום', 'בחילה', 'סחרחורת',
+                'dolor', 'síntoma', 'fiebre', 'náusea', 'mareo'
+            ];
+            
+            const lowerMessage = message.toLowerCase();
+            return medicalKeywords.some(keyword => lowerMessage.includes(keyword));
+        }
+
+        function showMedicalAnalysis() {
+            const analysis = document.getElementById('medicalAnalysis');
+            if (analysis) {
+                analysis.style.display = 'block';
+                analysis.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function startNewConsultation() {
+            // Reset conversation state
+            resetConversationState();
+            
+            // Clear chat messages except the welcome message
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message ai">
+                    <div class="message-avatar ai">🤖</div>
+                    <div>
+                        <div class="message-bubble">
+                            Bonjour ! Je suis votre assistant médical IA. Comment puis-je vous aider aujourd'hui ?
+                        </div>
+                        <div class="message-time">Maintenant</div>
+                    </div>
+                </div>
+            `;
+            
+            // Hide medical analysis
+            const analysis = document.getElementById('medicalAnalysis');
+            if (analysis) {
+                analysis.style.display = 'none';
+            }
+            
+            // Clear input
+            document.getElementById('messageInput').value = '';
+            
+            // Focus on input
+            document.getElementById('messageInput').focus();
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('MyDoc-AI Mobile Landing Page initialized');
+            updateUILanguage();
+        });
+    </script>
+</body>
+</html>
