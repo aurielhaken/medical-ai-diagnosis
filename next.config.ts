@@ -13,8 +13,10 @@ const nextConfig: NextConfig = {
   },
   // Disable static optimization for main page
   trailingSlash: false,
-  // Force revalidation
-  revalidate: 0,
+  // Configuration pour forcer le rechargement
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
 export default nextConfig;
