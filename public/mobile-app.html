@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDoc-AI Mobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg p-4 flex justify-between items-center z-50 border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center text-white text-xl border-2 border-white/20">
+                🏥
+            </div>
+            <div class="text-lg font-bold text-cyan-100">MyDoc-AI</div>
+        </div>
+        <div class="flex gap-4 items-center">
+            <select id="languageSelect" class="bg-transparent text-white border border-white/30 rounded-md px-3 py-1 text-sm">
+                <option value="fr">🇫🇷 FR</option>
+                <option value="en">🇺🇸 EN</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-20">
+        <!-- Hero Section -->
+        <div class="text-center px-5 py-16">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl inline-flex items-center justify-center text-white text-4xl mb-5 border-3 border-white/20 shadow-lg shadow-blue-500/30 animate-float">
+                    🏥
+                </div>
+                <h1 class="text-5xl font-bold text-cyan-100 mb-3 text-shadow-lg" data-translate="appTitle">MyDoc-AI</h1>
+                <p class="text-lg text-white/80" data-translate="appSubtitle">Intelligence Médicale</p>
+            </div>
+            
+            <h2 class="text-4xl font-bold text-white mb-4 text-shadow-lg" data-translate="mainTitle">Diagnostic Médical</h2>
+            <p class="text-lg text-white/90 mb-10 leading-relaxed" data-translate="mainSubtitle">Décrivez vos symptômes et obtenez un diagnostic préliminaire</p>
+            
+            <div class="max-w-2xl mx-auto relative flex bg-white/10 rounded-full p-2 backdrop-blur-lg border border-white/20 shadow-xl shadow-black/30">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="flex-1 bg-transparent text-white text-base px-5 py-4 outline-none placeholder-white/60"
+                    placeholder="Décrivez vos symptômes..."
+                    data-translate-placeholder="searchPlaceholder"
+                />
+                <button
+                    id="searchButton"
+                    class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-full px-6 py-4 text-white text-base font-semibold flex items-center gap-2 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60 transition-all duration-300 hover:-translate-y-0.5"
+                >
+                    <span class="text-lg">🔍</span>
+                    <span data-translate="searchButton">Rechercher</span>
+                </button>
+            </div>
+            
+            <p class="text-white/70 text-sm mt-4" data-translate="exampleText">Exemple : J'ai de la fièvre et des maux de tête</p>
+        </div>
+
+        <!-- Diagnosis Results -->
+        <div id="diagnosisResults" class="px-5 py-8 hidden">
+            <div class="max-w-4xl mx-auto bg-white/10 rounded-2xl p-8 backdrop-blur-lg border border-white/20">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-2xl">🏥</span>
+                    <span class="text-2xl font-bold text-cyan-100">Analyse Médicale IA</span>
+                    <span class="text-white/70 text-sm" id="currentDate"></span>
+                </div>
+                
+                <div id="diagnosisContent" class="space-y-6">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="px-5 py-16 bg-white/5">
+            <h2 class="text-3xl font-bold text-cyan-100 text-center mb-12" data-translate="featuresTitle">Fonctionnalités</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white/10 rounded-2xl p-8 text-center backdrop-blur-lg border border-white/20 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:bg-white/15 hover:shadow-xl hover:shadow-black/30 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        NEW!
+                    </div>
+                    <div class="text-5xl mb-5">💬</div>
+                    <h3 class="text-2xl font-bold text-cyan-100 mb-4" data-translate="chatTitle">Chat Médical IA</h3>
+                    <p class="text-white/80 leading-relaxed mb-6" data-translate="chatDescription">Posez vos questions de santé à tout moment. Notre IA médicale vous répond 24/7 avec des réponses personnalisées et précises.</p>
+                    <button class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-full px-6 py-3 text-white text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5">
+                        <span data-translate="startChat">Commencer le chat</span>
+                    </button>
+                </div>
+                
+                <div class="bg-white/10 rounded-2xl p-8 text-center backdrop-blur-lg border border-white/20 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:bg-white/15 hover:shadow-xl hover:shadow-black/30 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-orange-500 to-orange-700 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        HOT!
+                    </div>
+                    <div class="text-5xl mb-5">🔍</div>
+                    <h3 class="text-2xl font-bold text-cyan-100 mb-4" data-translate="diagnosisTitle">Diagnostic Intelligent</h3>
+                    <p class="text-white/80 leading-relaxed mb-6" data-translate="diagnosisDescription">Analysez vos symptômes avec notre IA avancée. Obtenez un diagnostic préliminaire avec des recommandations personnalisées.</p>
+                    <button class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-full px-6 py-3 text-white text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5">
+                        <span data-translate="analyzeSymptoms">Analyser mes symptômes</span>
+                    </button>
+                </div>
+                
+                <div class="bg-white/10 rounded-2xl p-8 text-center backdrop-blur-lg border border-white/20 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:bg-white/15 hover:shadow-xl hover:shadow-black/30 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-green-700 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        TRY NOW!
+                    </div>
+                    <div class="text-5xl mb-5">📚</div>
+                    <h3 class="text-2xl font-bold text-cyan-100 mb-4" data-translate="dictionaryTitle">Dictionnaire Médical</h3>
+                    <p class="text-white/80 leading-relaxed mb-6" data-translate="dictionaryDescription">Consultez notre base de données médicale complète. Termes, définitions et explications claires pour mieux comprendre votre santé.</p>
+                    <button class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-full px-6 py-3 text-white text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5">
+                        <span data-translate="exploreDictionary">Explorer le dictionnaire</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            fr: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "Intelligence Médicale",
+                mainTitle: "Diagnostic Médical",
+                mainSubtitle: "Décrivez vos symptômes et obtenez un diagnostic préliminaire",
+                searchPlaceholder: "Décrivez vos symptômes...",
+                searchButton: "Rechercher",
+                exampleText: "Exemple : J'ai de la fièvre et des maux de tête",
+                featuresTitle: "Fonctionnalités",
+                chatTitle: "Chat Médical IA",
+                chatDescription: "Posez vos questions de santé à tout moment. Notre IA médicale vous répond 24/7 avec des réponses personnalisées et précises.",
+                diagnosisTitle: "Diagnostic Intelligent",
+                diagnosisDescription: "Analysez vos symptômes avec notre IA avancée. Obtenez un diagnostic préliminaire avec des recommandations personnalisées.",
+                dictionaryTitle: "Dictionnaire Médical",
+                dictionaryDescription: "Consultez notre base de données médicale complète. Termes, définitions et explications claires pour mieux comprendre votre santé.",
+                startChat: "Commencer le chat",
+                analyzeSymptoms: "Analyser mes symptômes",
+                exploreDictionary: "Explorer le dictionnaire"
+            },
+            en: {
+                appTitle: "MyDoc-AI",
+                appSubtitle: "Medical Intelligence",
+                mainTitle: "Medical Diagnosis",
+                mainSubtitle: "Describe your symptoms and get a preliminary diagnosis",
+                searchPlaceholder: "Describe your symptoms...",
+                searchButton: "Search",
+                exampleText: "Example: I have fever and headaches",
+                featuresTitle: "Features",
+                chatTitle: "AI Medical Chat",
+                chatDescription: "Ask your health questions anytime. Our medical AI responds 24/7 with personalized and accurate answers.",
+                diagnosisTitle: "Intelligent Diagnosis",
+                diagnosisDescription: "Analyze your symptoms with our advanced AI. Get a preliminary diagnosis with personalized recommendations.",
+                dictionaryTitle: "Medical Dictionary",
+                dictionaryDescription: "Consult our complete medical database. Terms, definitions and clear explanations to better understand your health.",
+                startChat: "Start chat",
+                analyzeSymptoms: "Analyze my symptoms",
+                exploreDictionary: "Explore dictionary"
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        // Language switching
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            const t = translations[lang];
+            
+            // Update all elements with data-translate attribute
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-translate-placeholder');
+                if (t[key]) {
+                    el.placeholder = t[key];
+                }
+            });
+        }
+
+        // Search function
+        async function handleSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const symptoms = searchInput.value.trim();
+            
+            if (!symptoms) {
+                alert('Veuillez décrire vos symptômes avant de rechercher.');
+                return;
+            }
+            
+            // Show loading state
+            searchButton.innerHTML = '<span class="text-lg">⏳</span><span>Analyse...</span>';
+            searchButton.disabled = true;
+            
+            try {
+                const response = await fetch('/api/diagnosis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptoms: [symptoms],
+                        doctorId: 'mydoc-ai'
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayDiagnosis(data);
+                
+            } catch (error) {
+                console.error('Erreur API:', error);
+                alert('Erreur lors de l\'analyse. Veuillez réessayer.');
+            } finally {
+                // Reset button
+                searchButton.innerHTML = '<span class="text-lg">🔍</span><span>Rechercher</span>';
+                searchButton.disabled = false;
+            }
+        }
+
+        // Display diagnosis results
+        function displayDiagnosis(data) {
+            const resultsDiv = document.getElementById('diagnosisResults');
+            const contentDiv = document.getElementById('diagnosisContent');
+            
+            if (data.diagnosis && data.diagnosis.length > 0) {
+                contentDiv.innerHTML = data.diagnosis.map(diag => `
+                    <div class="bg-white/5 rounded-xl p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-cyan-100">${diag.condition}</h3>
+                            <span class="text-2xl font-bold" style="color: #1e40af">
+                                ${Math.round(diag.probability * 100)}%
+                            </span>
+                        </div>
+                        <p class="text-white/90 mb-4">${diag.description}</p>
+                        <div class="space-y-2">
+                            <h4 class="text-lg font-semibold text-cyan-100">Recommandations :</h4>
+                            ${diag.recommendations ? diag.recommendations.map(rec => `
+                                <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                                    <span class="text-green-400 text-lg">✅</span>
+                                    <span class="text-white/90">${rec}</span>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+                resultsDiv.classList.remove('hidden');
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('fr-FR');
+            
+            // Language selector
+            document.getElementById('languageSelect').addEventListener('change', (e) => {
+                switchLanguage(e.target.value);
+            });
+            
+            // Search button
+            document.getElementById('searchButton').addEventListener('click', handleSearch);
+            
+            // Enter key in search input
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+            
+            // Initialize with French
+            switchLanguage('fr');
+        });
+    </script>
+</body>
+</html>
