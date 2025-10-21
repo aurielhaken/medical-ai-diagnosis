@@ -232,4 +232,4 @@ export default function MobilePage() {
       </div>
     </div>
   );
-}
+}// Force rebuild
