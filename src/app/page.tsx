@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Search, Stethoscope, AlertTriangle, CheckCircle } from 'lucide-react';
 
 // FORCE RENDER - Interface bleu roi moderne
-const FORCE_UPDATE = Date.now();
+const FORCE_UPDATE = Date.now() + Math.random();
 
 interface Diagnosis {
   condition: string;
