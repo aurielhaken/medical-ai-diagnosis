@@ -15,7 +15,7 @@ function initializeGemini(apiKey: string) {
 export async function callGeminiMedical(symptoms: string[], doctorId: string, apiKey: string, clarificationAnswers?: Record<string, string>): Promise<any> {
   try {
     const genAI = initializeGemini(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const clarificationContext = clarificationAnswers 
       ? `\n\nINFORMATIONS SUPPLÉMENTAIRES (réponses aux questions de clarification):\n${Object.entries(clarificationAnswers).map(([key, value]) => `- ${key}: ${value}`).join('\n')}`

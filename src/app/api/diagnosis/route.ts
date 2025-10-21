@@ -46,24 +46,24 @@ export async function POST(request: NextRequest) {
     let aiDiagnosis = null;
     let mode = 'fallback';
 
-    // 1. Essayer Gemini Pro en premier (GRATUIT) avec timeout
-    if (geminiKey) {
-      try {
-        console.log('Tentative diagnostic avec Gemini Pro (gratuit)...');
-        aiDiagnosis = await Promise.race([
-          callGeminiMedical(symptoms, 'universal-ai', geminiKey, clarificationAnswers),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Timeout Gemini')), 15000)
-          )
-        ]);
-        mode = 'gemini-medical';
-      } catch (e) {
-        console.error('Gemini médical failed:', e);
-      }
-    }
+    // 1. Gemini désactivé temporairement (problème de modèle)
+    // if (geminiKey) {
+    //   try {
+    //     console.log('Tentative diagnostic avec Gemini Pro (gratuit)...');
+    //     aiDiagnosis = await Promise.race([
+    //       callGeminiMedical(symptoms, 'universal-ai', geminiKey, clarificationAnswers),
+    //       new Promise((_, reject) => 
+    //         setTimeout(() => reject(new Error('Timeout Gemini')), 15000)
+    //       )
+    //     ]);
+    //     mode = 'gemini-medical';
+    //   } catch (e) {
+    //     console.error('Gemini médical failed:', e);
+    //   }
+    // }
 
-    // 2. Essayer OpenAI GPT-4o (excellent pour le médical) avec timeout
-    if (!aiDiagnosis && openAIKey) {
+    // 1. Essayer OpenAI GPT-4o (excellent pour le médical) avec timeout
+    if (openAIKey) {
       try {
         console.log('Tentative diagnostic avec OpenAI GPT-4o...');
         aiDiagnosis = await Promise.race([
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 3. Essayer OpenRouter avec modèles médicaux spécialisés avec timeout
+    // 2. Essayer OpenRouter avec modèles médicaux spécialisés avec timeout
     if (!aiDiagnosis && openRouterKey) {
       try {
         console.log('Tentative diagnostic avec OpenRouter...');

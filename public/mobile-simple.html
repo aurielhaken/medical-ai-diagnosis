@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDoc-AI Mobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <!-- Header -->
+    <div class="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg p-4 flex justify-between items-center z-50 border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center text-white text-xl border-2 border-white/20">
+                🏥
+            </div>
+            <div class="text-lg font-bold text-cyan-100">MyDoc-AI</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-20">
+        <!-- Hero Section -->
+        <div class="text-center px-5 py-16">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl inline-flex items-center justify-center text-white text-4xl mb-5 border-3 border-white/20 shadow-lg shadow-blue-500/30 animate-float">
+                    🏥
+                </div>
+                <h1 class="text-5xl font-bold text-cyan-100 mb-3">MyDoc-AI</h1>
+                <p class="text-lg text-white/80">Intelligence Médicale</p>
+            </div>
+            
+            <h2 class="text-4xl font-bold text-white mb-4">Diagnostic Médical</h2>
+            <p class="text-lg text-white/90 mb-10">Décrivez vos symptômes et obtenez un diagnostic préliminaire</p>
+            
+            <div class="max-w-2xl mx-auto relative flex bg-white/10 rounded-full p-2 backdrop-blur-lg border border-white/20 shadow-xl">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="flex-1 bg-transparent text-white text-base px-5 py-4 outline-none placeholder-white/60"
+                    placeholder="Décrivez vos symptômes..."
+                />
+                <button
+                    id="searchButton"
+                    class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-full px-6 py-4 text-white text-base font-semibold flex items-center gap-2 shadow-lg hover:shadow-blue-500/60 transition-all duration-300"
+                >
+                    <span class="text-lg">🔍</span>
+                    <span>Rechercher</span>
+                </button>
+            </div>
+            
+            <p class="text-white/70 text-sm mt-4">Exemple : J'ai de la fièvre et des maux de tête</p>
+        </div>
+
+        <!-- Diagnosis Results -->
+        <div id="diagnosisResults" class="px-5 py-8 hidden">
+            <div class="max-w-4xl mx-auto bg-white/10 rounded-2xl p-8 backdrop-blur-lg border border-white/20">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-2xl">🏥</span>
+                    <span class="text-2xl font-bold text-cyan-100">Analyse Médicale IA</span>
+                    <span class="text-white/70 text-sm" id="currentDate"></span>
+                </div>
+                
+                <div id="diagnosisContent">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple search function
+        async function handleSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const symptoms = searchInput.value.trim();
+            
+            if (!symptoms) {
+                alert('Veuillez décrire vos symptômes avant de rechercher.');
+                return;
+            }
+            
+            // Show loading state
+            searchButton.innerHTML = '<span class="text-lg">⏳</span><span>Analyse...</span>';
+            searchButton.disabled = true;
+            
+            try {
+                console.log('Envoi des symptômes:', symptoms);
+                
+                const response = await fetch('/api/diagnosis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptoms: [symptoms],
+                        doctorId: 'mydoc-ai'
+                    }),
+                });
+
+                console.log('Réponse reçue:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Données reçues:', data);
+                
+                displayDiagnosis(data);
+                
+            } catch (error) {
+                console.error('Erreur API:', error);
+                alert('Erreur lors de l\'analyse. Veuillez réessayer.');
+            } finally {
+                // Reset button
+                searchButton.innerHTML = '<span class="text-lg">🔍</span><span>Rechercher</span>';
+                searchButton.disabled = false;
+            }
+        }
+
+        // Display diagnosis results
+        function displayDiagnosis(data) {
+            const resultsDiv = document.getElementById('diagnosisResults');
+            const contentDiv = document.getElementById('diagnosisContent');
+            
+            console.log('Affichage des données:', data);
+            
+            if (data && data.condition) {
+                contentDiv.innerHTML = `
+                    <div class="bg-white/5 rounded-xl p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-cyan-100">${data.condition}</h3>
+                            <span class="text-2xl font-bold" style="color: #1e40af">
+                                ${Math.round(data.probability)}%
+                            </span>
+                        </div>
+                        <p class="text-white/90 mb-4">${data.description}</p>
+                        <div class="space-y-2">
+                            <h4 class="text-lg font-semibold text-cyan-100">Recommandations :</h4>
+                            ${data.recommendations ? data.recommendations.map(rec => `
+                                <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                                    <span class="text-green-400 text-lg">✅</span>
+                                    <span class="text-white/90">${rec}</span>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                        ${data.differentialDiagnosis ? `
+                            <div class="mt-4">
+                                <h4 class="text-lg font-semibold text-cyan-100 mb-2">Diagnostics différentiels :</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${data.differentialDiagnosis.map(diag => `
+                                        <span class="bg-blue-500/20 text-blue-200 px-3 py-1 rounded-full text-sm">${diag}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        ${data.nextSteps ? `
+                            <div class="mt-4">
+                                <h4 class="text-lg font-semibold text-cyan-100 mb-2">Prochaines étapes :</h4>
+                                <div class="space-y-1">
+                                    ${data.nextSteps.map(step => `
+                                        <div class="flex items-center gap-2 text-white/80">
+                                            <span class="text-blue-400">→</span>
+                                            <span>${step}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                resultsDiv.classList.remove('hidden');
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.error('Format de données inattendu:', data);
+                alert('Erreur dans le format des données reçues.');
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('fr-FR');
+            
+            // Search button
+            document.getElementById('searchButton').addEventListener('click', handleSearch);
+            
+            // Enter key in search input
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
