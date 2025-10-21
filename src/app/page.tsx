@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { Search, Stethoscope, AlertTriangle, CheckCircle } from 'lucide-react';
 
+// FORCE RENDER - Interface bleu roi moderne
+const FORCE_UPDATE = Date.now();
+
 interface Diagnosis {
   condition: string;
   probability: number;
@@ -156,7 +159,7 @@ export default function MyDocAI() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div key={FORCE_UPDATE} className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
       {/* Effets de fond animés */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
