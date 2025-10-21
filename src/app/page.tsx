@@ -159,7 +159,7 @@ export default function MyDocAI() {
   };
 
   return (
-    <div key={FORCE_UPDATE} className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div key={FORCE_UPDATE} className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 relative overflow-hidden">
       {/* Effets de fond animés */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -213,10 +213,10 @@ export default function MyDocAI() {
           
           {/* Texte du logo */}
           <div className="relative">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-white via-blue-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+            <h1 className="text-4xl font-black bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent drop-shadow-lg" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
               MyDoc-AI
             </h1>
-            <p className="text-lg font-bold text-white/80" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+            <p className="text-lg font-bold text-cyan-200 drop-shadow-lg" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
               Intelligence Médicale
             </p>
           </div>
@@ -245,12 +245,12 @@ export default function MyDocAI() {
         {/* Hero Section Ultra Moderne */}
         <div className="text-center mb-16 animate-fade-in">
           {/* Titre principal ultra moderne */}
-            <h1 className="text-7xl md:text-8xl font-black bg-gradient-to-r from-white via-blue-200 to-blue-300 bg-clip-text text-transparent mb-8 tracking-tight drop-shadow-2xl" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+            <h1 className="text-7xl md:text-8xl font-black bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent mb-8 tracking-tight drop-shadow-2xl" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
               MyDoc-AI
             </h1>
           
           {/* Sous-titre ultra moderne */}
-          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-white/90 drop-shadow-lg mb-12" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+          <p className="text-2xl md:text-3xl font-bold max-w-4xl text-center leading-relaxed text-cyan-100 drop-shadow-lg mb-12" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
             {t.subtitle}
           </p>
         </div>
